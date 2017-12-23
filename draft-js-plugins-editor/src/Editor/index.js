@@ -66,10 +66,18 @@ class PluginEditor extends Component {
   }
 
   componentWillReceiveProps(next) {
-    const {params, editorState} = next;
+    const curr = this.props;
+    const currDec = curr.editorState.getDecorator();
+    const nextDec = next.editorState.getDecorator();
+
+    if (currDec && nextDec
+      && nextDec.decorators
+      && currDec.decorators.size === nextDec.decorators.size) return;
+
     //TODO: check performance
-    if(!isEqual(params, this.props.params)){
-      this.onChange(editorState);
+    if(!isEqual(next.params, this.props.params)){
+      console.log('updating decorators')
+      this.onChange(next.editorState);
     }
   }
 
