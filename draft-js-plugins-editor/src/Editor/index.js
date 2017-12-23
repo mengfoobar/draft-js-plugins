@@ -11,6 +11,7 @@ import proxies from './proxies';
 import moveSelectionToEnd from './moveSelectionToEnd';
 import resolveDecorators from './resolveDecorators';
 import * as defaultKeyBindingPlugin from './defaultKeyBindingPlugin';
+import isEqual from 'lodash.isequal'
 
 /**
  * The main editor component
@@ -24,6 +25,7 @@ class PluginEditor extends Component {
     defaultKeyBindings: PropTypes.bool,
     defaultBlockRenderMap: PropTypes.bool,
     customStyleMap: PropTypes.object,
+    params: PropTypes.object,
     // eslint-disable-next-line react/no-unused-prop-types
     decorators: PropTypes.array,
   };
@@ -32,6 +34,7 @@ class PluginEditor extends Component {
     defaultBlockRenderMap: true,
     defaultKeyBindings: true,
     customStyleMap: {},
+    params: {},
     plugins: [],
     decorators: [],
   };
@@ -63,17 +66,11 @@ class PluginEditor extends Component {
   }
 
   componentWillReceiveProps(next) {
-    const curr = this.props;
-    const currDec = curr.editorState.getDecorator();
-    const nextDec = next.editorState.getDecorator();
-
-    if (currDec === nextDec) return;
-    if (currDec && nextDec && currDec.decorators.size === nextDec.decorators.size) return;
-    if (!currDec && nextDec) return;
-
-    const decorator = curr.editorState.getDecorator();
-    const editorState = EditorState.set(next.editorState, { decorator });
-    this.onChange(editorState);
+    const {params, editorState} = next;
+    //TODO: check performance
+    if(!isEqual(params, this.props.params)){
+      this.onChange(editorState);
+    }
   }
 
   componentWillUnmount() {
