@@ -9,17 +9,8 @@ import {
 import styles from '../alignmentToolStyles.css';
 import buttonStyles from '../buttonStyles.css';
 
-const getRelativeParent = (element) => {
-  if (!element) {
-    return null;
-  }
-
-  const position = window.getComputedStyle(element).getPropertyValue('position');
-  if (position !== 'static') {
-    return element;
-  }
-
-  return getRelativeParent(element.parentElement);
+const getRelativeParent = () => {
+  return document.getElementsByClassName("DraftEditor-root")[0];
 };
 
 export default class AlignmentTool extends React.Component {
@@ -44,7 +35,7 @@ export default class AlignmentTool extends React.Component {
       let position;
       const boundingRect = this.props.store.getItem('boundingRect');
       if (visibleBlock) {
-        const relativeParent = getRelativeParent(this.toolbar.parentElement);
+        const relativeParent = getRelativeParent();
         const toolbarHeight = this.toolbar.clientHeight;
         const relativeRect = relativeParent ? relativeParent.getBoundingClientRect() : document.body.getBoundingClientRect();
         position = {
@@ -61,7 +52,7 @@ export default class AlignmentTool extends React.Component {
         alignment,
         position,
       });
-    }, 0);
+    }, 100);
   }
 
   onAlignmentChange = (alignment) => {
@@ -73,9 +64,7 @@ export default class AlignmentTool extends React.Component {
   render() {
     const defaultButtons = [
       AlignBlockDefaultButton,
-      AlignBlockLeftButton,
       AlignBlockCenterButton,
-      AlignBlockRightButton,
     ];
     return (
       <div
