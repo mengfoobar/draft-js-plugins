@@ -31,7 +31,7 @@ export default ({ theme, blockKeyStore }) => (WrappedComponent) => class BlockFo
     const { isFocused } = blockProps;
     const combinedClassName = isFocused
       ? unionClassNames(className, theme.focused)
-      : unionClassNames(className, theme.unfocused);
+      : className
     return (
       <WrappedComponent
         {...this.props}
