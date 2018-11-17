@@ -30,7 +30,7 @@ export default class Toolbar extends React.Component {
       const editor = this.props.getEditorRef().editor.editor;
       this.setState({
         position: {
-          top: (node.offsetTop + median ),
+          top: (node.offsetTop + median + 15),
           left: editor.getBoundingClientRect().left - 320,
         },
       });
@@ -41,7 +41,7 @@ export default class Toolbar extends React.Component {
     const { theme, store } = this.props;
     return (
       <div
-        className={theme.toolbarStyles.wrapper}
+        className={`${theme.toolbarStyles.wrapper} sidebar-toolbar` }
         style={this.state.position}
       >
         {
