@@ -14,7 +14,7 @@ export default class Toolbar extends React.Component {
   }
 
   computePosition = () => {
-    const {editorState} = this.props;
+    const {editorState, isSidebarVisible} = this.props;
     const selection = editorState.getSelection();
 
     const currentContent = editorState.getCurrentContent();
@@ -31,7 +31,7 @@ export default class Toolbar extends React.Component {
       this.setState({
         position: {
           top: (node.offsetTop + median + 15),
-          left: editor.getBoundingClientRect().left - 320,
+          left: isSidebarVisible ? editor.getBoundingClientRect().left - 320 : 100,
         },
       });
     }, 0);
