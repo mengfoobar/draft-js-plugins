@@ -28,10 +28,13 @@ export default class Toolbar extends React.Component {
 
       const median = (bottom-top)/2
       const editor = this.props.getEditorRef().editor.editor;
+
+      
+
       this.setState({
         position: {
           top: (node.offsetTop + median + 15),
-          left: isSidebarVisible ? editor.getBoundingClientRect().left - 320 : 100,
+          left: isSidebarVisible && editor ? editor.getBoundingClientRect().left - 320 : 105,
         },
       });
     }, 0);
